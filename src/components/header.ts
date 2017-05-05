@@ -12,6 +12,8 @@ export const header = (data: Column[][]): string => {
     const result = [
         '<thead><tr>',
         ...columns,
+        '<th class="sum">Sum</th>',
+        '<th></th>',
         '</tr></thead>'
     ];
     return result.join('');

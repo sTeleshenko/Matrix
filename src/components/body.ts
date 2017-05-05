@@ -8,15 +8,23 @@ export const body = (data: Column[][]): string => {
     const result = [
         '<tbody>',
         ...data.map((columns, rowIndex) => {
+            const rowSum = getRowSum(columns);
             const row = [
                 `<tr id="row-${rowIndex}">`,
                 ...columns.map((col, colIndex) => {
+                    const colPercents = (col.amount / (rowSum / 100)).toFixed(2);
                     return `<td data-row="${ rowIndex }" 
                                 data-col="${ colIndex }" 
                                 class="field"
-                                id="${ col.id }">${ col.amount }</td>`
+                                id="${ col.id }">
+                                <span class="field-value">${ col.amount }</span>
+                                <span class="field-percents">
+                                    <span class="field-percents-value">${ colPercents }%</span>
+                                    <span class="field-percents-bg" style="height: ${colPercents}%;"></span>
+                                </span>
+                            </td>`
                 }),
-                `<td class="sum" data-row="${rowIndex}">${ getRowSum(columns) }</td>`,
+                `<td class="sum" data-row="${rowIndex}">${ rowSum }</td>`,
                 `<td class="action"><button class="delete" data-row="${rowIndex}">X</button></td>`,
                 '</tr>'
             ];
